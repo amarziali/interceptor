@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'com.dd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.datadoghq', name: 'dd-trace-api', version: '+'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.+'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.+'
+
+}
+
+test {
+    useJUnitPlatform()
+}

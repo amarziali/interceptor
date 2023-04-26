@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'com.dd'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.datadoghq', name: 'dd-trace-api', version: '+'
+}
+
+test {
+    useJUnitPlatform()
+}

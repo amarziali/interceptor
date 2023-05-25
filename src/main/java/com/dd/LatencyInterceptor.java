@@ -30,7 +30,7 @@ public class LatencyInterceptor implements TraceInterceptor {
                     for (final String entry : query.split("&")) {
                         final String[] keyValuePair = entry.split("=", 2);
                         final String name = URLDecoder.decode(keyValuePair[0], "UTF-8");
-                        if ("userid".equals(name)) {
+                        if ("userid".equals(name) || "TrUserId".equals(name)) {
                             final String value = keyValuePair.length > 1 ? URLDecoder.decode(keyValuePair[1], "UTF-8") : "";
                             rootSpan.setTag(DDTags.USER_NAME, value);
                             break;

@@ -12,7 +12,7 @@ class LatencyInterceptorTest {
     void testUrlParsing() {
         final LatencyInterceptor interceptor = new LatencyInterceptor();
         final MutableSpan span = Mockito.mock(MutableSpan.class);
-        Mockito.when(span.getTag("http.url")).thenReturn("http://test/path?aa=bb&userid=test&");
+        Mockito.when(span.getTag("http.query.string")).thenReturn("aa=bb&userid=test&");
         Mockito.when(span.getLocalRootSpan()).thenReturn(span);
         interceptor.onTraceComplete(Collections.singletonList(span));
         Mockito.verify(span, Mockito.atLeastOnce()).setTag(DDTags.USER_NAME, "test");
@@ -22,20 +22,9 @@ class LatencyInterceptorTest {
     void testUrlParsingNoUserId() {
         final LatencyInterceptor interceptor = new LatencyInterceptor();
         final MutableSpan span = Mockito.mock(MutableSpan.class);
-        Mockito.when(span.getTag("http.url")).thenReturn("http://test/path?");
+        Mockito.when(span.getTag("http.query.string")).thenReturn("null");
         Mockito.when(span.getLocalRootSpan()).thenReturn(span);
         interceptor.onTraceComplete(Collections.singletonList(span));
         Mockito.verify(span, Mockito.never()).setTag(Mockito.eq(DDTags.USER_NAME), Mockito.anyString());
     }
-
-    @Test
-    void testWithBadUrl() {
-        final LatencyInterceptor interceptor = new LatencyInterceptor();
-        final MutableSpan span = Mockito.mock(MutableSpan.class);
-        Mockito.when(span.getTag("http.url")).thenReturn("http://test/path\\a?");
-        Mockito.when(span.getLocalRootSpan()).thenReturn(span);
-        interceptor.onTraceComplete(Collections.singletonList(span));
-        Mockito.verify(span, Mockito.never()).setTag(Mockito.eq(DDTags.USER_NAME), Mockito.anyString());
-    }
-
 }
